@@ -4,10 +4,12 @@ from datetime import datetime
 from discord.ext import commands
 from discord import app_commands
 from src.util.logger import Logger
+from src.helper.config import Config
 
 class Ping(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self.config = Config()
 
     # Ping bot command  
     @app_commands.command(name="ping", description="Command to test the bot")
