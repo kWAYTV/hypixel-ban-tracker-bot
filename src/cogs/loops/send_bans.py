@@ -15,12 +15,13 @@ class SendBansLoop(commands.Cog):
 
     # Dynamic activity
     status = cycle(["Hypixel Bans", "Cheaters", "Hackers", "Rulebreakers", "Banned Players"])
-    @tasks.loop(seconds=0.1)
+    @tasks.loop(seconds=1)
     async def send_bans(self):
+        config = Config()
         bans = self.banchecker.check_bans()
         if bans:
-            [await self.bot.get_channel(channel_id).send(embed=embed) for embed in bans for channel_id in self.config.tracker_channels]
-            self.logger.log("INFO", f"Sent {len(bans)} ban(s) to {len(self.config.tracker_channels)} channel(s)!")
+            [await self.bot.get_channel(channel_id).send(embed=embed) for embed in bans for channel_id in config.tracker_channels]
+            self.logger.log("INFO", f"Sent {len(bans)} ban(s) to {len(config.tracker_channels)} channel(s)!")
 
     @send_bans.before_loop
     async def before_change_status(self) -> None:

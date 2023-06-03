@@ -12,6 +12,7 @@ class GuildJoin(commands.Cog):
         self.bot.tree.copy_global_to(guild=guild)
         await self.bot.tree.sync(guild=guild)
         self.logger.log("INFO", f"Synced commands with {guild.name}.")
+        await self.logger.discord_log(f"Synced commands with {guild.name}.")
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(GuildJoin(bot))

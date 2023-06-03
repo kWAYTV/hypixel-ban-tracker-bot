@@ -17,7 +17,7 @@ class OnReady(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.logger = Logger()
+        self.logger = Logger(self.bot)
 
     def print_logo(self):
         self.logger.clear()
@@ -27,7 +27,8 @@ class OnReady(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         self.print_logo()
-        print(f"{Fore.MAGENTA}> {Fore.RESET}Logged in as {self.bot.user.name}#{self.bot.user.discriminator}.")
+        self.logger.log("INFO", f"Logged in as {self.bot.user.name}#{self.bot.user.discriminator}.")
+        await self.logger.discord_log(f"Bot logged in as {self.bot.user.name}#{self.bot.user.discriminator}.")
 
         logging.basicConfig(handlers=[logging.FileHandler('hypixel_ban_checker.log', 'a+', 'utf-8')], level=logging.ERROR, format='%(asctime)s: %(message)s')
 

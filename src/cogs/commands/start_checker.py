@@ -18,13 +18,15 @@ class StartChecker(commands.Cog):
         await interaction.response.defer(ephemeral=True)
         if interaction.channel_id not in self.config.tracker_channels:
             self.config.add_tracker_channel(interaction.channel_id)
-            embed = discord.Embed(title="✅ Added!", description="I will now send bans to this channel!", color=0xb34760)
+            embed = discord.Embed(title="✅ Channel added!", description="I will now send bans to this channel!", color=0xb34760)
+            embed.set_author(name="Hypixel Ban Tracker")
             embed.set_footer(text="Hypixel Ban Tracker - discord.gg/kws")
             embed.set_image(url=self.config.hypixel_logo)
             embed.timestamp = datetime.utcnow()
             await interaction.followup.send(embed=embed)
         else:
-            embed = discord.Embed(title="❌ Already added!", description="I am already sending bans to this channel!", color=0xb34760)
+            embed = discord.Embed(title="❌ Channel already added!", description="I am already sending bans to this channel!", color=0xb34760)
+            embed.set_author(name="Hypixel Ban Tracker")
             embed.set_footer(text="Hypixel Ban Tracker - discord.gg/kws")
             embed.set_image(url=self.config.hypixel_logo)
             embed.timestamp = datetime.utcnow()

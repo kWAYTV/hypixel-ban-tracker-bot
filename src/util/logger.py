@@ -7,7 +7,7 @@ from src.helper.config import Config
 
 class Logger:
 
-    def __init__(self):
+    def __init__(self, bot: commands.Bot = None):
         self.config = Config()
         # Set the colors for the logs
         self.log_types = {
@@ -20,6 +20,7 @@ class Logger:
             "BAD": Fore.RED,
             "INPUT": Fore.BLUE,
         }
+        self.bot = bot
 
     # Clear console function
     def clear(self):
