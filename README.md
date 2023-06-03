@@ -15,7 +15,7 @@ HypixelBanChecker tracks watchdog (automatic) and staff (manual) bans on the Hyp
 ## 🛠️ Setup
 
 1. Clone the repository & install the requirements.
-2. Update the `config.json` file with your discord token and the channel IDs where you want the bot to send updates.
+2. Update the `config.yaml` file with your discord token and the channel IDs where you want the bot to send updates.
 3. Run the bot!
 
 ```bash

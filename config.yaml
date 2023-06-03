@@ -1,0 +1,11 @@
+# Discord #
+
+# Discord bot token
+discord_token: ""
+# Discord bot prefix
+bot_prefix: "."
+# Discord logs channel id
+logs_channel:
+# Tracker channels
+tracker_channels:
+  -
