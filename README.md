@@ -6,6 +6,8 @@ Welcome to the HypixelBanChecker, a discord bot that actively monitors and repor
 
 HypixelBanChecker tracks watchdog (automatic) and staff (manual) bans on the Hypixel Minecraft server. The bot is easy to set up and use, and it offers real-time updates on the ban status of players on the Hypixel server.
 
+Add the bot to your server so you don't need to host it yourself! [Invite the bot](https://discord.com/api/oauth2/authorize?client_id=1114594189796192276&permissions=2147560464&scope=bot%20applications.commands)
+
 ## 🚀 Features
 
 1. **Real-time Updates** - The bot checks the ban status every 0.1 seconds.
