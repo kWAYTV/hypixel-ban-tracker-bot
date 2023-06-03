@@ -9,8 +9,8 @@ class GuildJoin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        self.tree.copy_global_to(guild=guild)
-        await self.tree.sync(guild=guild)
+        self.bot.tree.copy_global_to(guild=guild)
+        await self.bot.tree.sync(guild=guild)
         self.logger.log("INFO", f"Synced commands with {guild.name}.")
 
 async def setup(bot: commands.Bot) -> None:
