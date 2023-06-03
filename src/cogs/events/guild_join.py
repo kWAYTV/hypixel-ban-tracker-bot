@@ -5,7 +5,7 @@ class GuildJoin(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.logger = Logger()
+        self.logger = Logger(self.bot)
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
