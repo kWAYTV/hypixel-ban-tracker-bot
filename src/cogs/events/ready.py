@@ -2,6 +2,7 @@ import logging
 from colorama import Fore
 from discord.ext import commands
 from src.util.logger import Logger
+from src.helper.config import Config
 from pystyle import Colors, Colorate, Center
 
 logo = """

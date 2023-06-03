@@ -2,7 +2,7 @@ from discord.ext import commands
 from src.util.logger import Logger
 from src.helper.config import Config
 
-class GuildLeave(commands.Cog):
+class GuildRemove(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -12,16 +12,14 @@ class GuildLeave(commands.Cog):
     async def check_channels(self):
         # Check every channel in the config if the bot is still in it
         for channel_id in Config().tracker_channels:
-            if not self.bot.get_channel(channel_id):
+            if not self.bot.get_channel(channel_id) or self.bot.get_channel(channel_id) is None:
                 Config().remove_tracker_channel(channel_id)
                 self.logger.log("INFO", f"Removed channel {channel_id} from the config.")
-            else:
-                self.logger.log("INFO", f"Channel {channel_id} is still in the bot's eyes.")
 
     @commands.Cog.listener()
-    async def on_guild_leave(self, guild):
-        self.check_channels()
+    async def on_guild_remove(self, guild):
+        await self.check_channels()
 
 async def setup(bot: commands.Bot) -> None:
-    await bot.add_cog(GuildLeave(bot))
+    await bot.add_cog(GuildRemove(bot))
     return Logger().log("INFO", "On guild leave event registered!")
