@@ -1,4 +1,5 @@
 import discord, requests, math, time
+from datetime import datetime
 from src.helper.config import Config
 
 class BanChecker:
@@ -16,6 +17,7 @@ class BanChecker:
         embed = discord.Embed(title="New ban detected!", color=color, description=f"<t:{math.floor(time.time())}:R>")
         embed.set_author(name=f"{enforcer} banned {ban_diff} player{'s'[:ban_diff^1]}!")
         embed.set_thumbnail(url=self.config.hypixel_logo)
+        embed.timestamp = datetime.utcnow()
         embed.set_footer(text="Hypixel Ban Tracker - discord.gg/kws")
         return embed
 

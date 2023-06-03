@@ -19,19 +19,11 @@ class StopChecker(commands.Cog):
         await interaction.response.defer(ephemeral=True)
         if interaction.channel_id in Config().tracker_channels:
             Config().remove_tracker_channel(interaction.channel_id)
-            embed = discord.Embed(title="✅ Channel removed!", description="I will now stop sending bans to this channel!", color=0xb34760)
-            embed.set_footer(text="Hypixel Ban Tracker - discord.gg/kws")
-            embed.set_image(url=self.config.hypixel_logo)
-            embed.timestamp = datetime.utcnow()
-            await interaction.followup.send(embed=embed)
+            await interaction.followup.send("✅ Channel removed! I will now stop sending bans to this channel.")
             self.logger.log("INFO", f"Removed channel {interaction.channel_id} from tracker channels list.")
             await self.logger.discord_log(f"Removed channel {interaction.channel_id} from tracker channels list.")
         else:
-            embed = discord.Embed(title="❌ Channel not found!", description="That channel it's not into the list!", color=0xb34760)
-            embed.set_footer(text="Hypixel Ban Tracker - discord.gg/kws")
-            embed.set_image(url=self.config.hypixel_logo)
-            embed.timestamp = datetime.utcnow()
-            await interaction.followup.send(embed=embed)
+            await interaction.followup.send("❌ Channel not found! That channel it's not into the list.")
 
     @stop_checker.error
     async def stop_checker_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):

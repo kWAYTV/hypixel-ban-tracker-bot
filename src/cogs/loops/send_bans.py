@@ -13,8 +13,7 @@ class SendBansLoop(commands.Cog):
         self.config = Config()
         self.send_bans.start()
 
-    # Dynamic activity
-    status = cycle(["Hypixel Bans", "Cheaters", "Hackers", "Rulebreakers", "Banned Players"])
+    # Send bans loop
     @tasks.loop(seconds=1)
     async def send_bans(self):
         config = Config()
