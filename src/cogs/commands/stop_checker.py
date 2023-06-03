@@ -28,7 +28,7 @@ class StopChecker(commands.Cog):
     @stop_checker.error
     async def stop_checker_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("You don't have permissions to use this command.", ephemeral=True)
+            await interaction.response.send_message("❌ You don't have permissions to use this command.", ephemeral=True)
         else:
             await interaction.response.send_message(f"Error: {error}", ephemeral=True)
 
