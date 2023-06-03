@@ -24,8 +24,8 @@ python main.py
 
 ## 🖐️ Commands
 
-- `subscribe` - Subscribes the channel which the command is ran in to the Ban Tracker.
-- `unsubscribe` - Unsubscribes the channel which the command is ran in to the Ban Tracker.
+- `startchecker` - Subscribes the channel which the command is ran in to the Ban Tracker.
+- `stopchecker` - Unsubscribes the channel which the command is ran in to the Ban Tracker.
 
 ## ⚠️ Disclaimer
 
