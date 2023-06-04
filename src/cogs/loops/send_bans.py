@@ -14,7 +14,7 @@ class SendBansLoop(commands.Cog):
         self.send_bans.start()
 
     # Send bans loop
-    @tasks.loop(seconds=1)
+    @tasks.loop(seconds=30)
     async def send_bans(self):
         config = Config()
         bans = self.banchecker.check_bans()
