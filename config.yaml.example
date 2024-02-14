@@ -1,0 +1,9 @@
+app_logo: https://i.imgur.com/qXuAK9O.png
+app_name: Hypixel
+app_url: https://kwayservices.top
+app_version: 0.2
+bot_prefix: .
+bot_token: 
+dev_guild_id: 
+log_file: hypixel.log
+logs_channel: 
