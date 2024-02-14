@@ -8,7 +8,7 @@ HypixelBanChecker tracks watchdog (automatic) and staff (manual) bans on the Hyp
 
 ## 🚀 Features
 
-1. **Real-time Updates** - The bot checks the ban status every 0.1 seconds.
+1. **Real-time Updates** - The bot checks the ban status every 30 seconds.
 2. **Easy to Use Commands** - Subscribing or unsubscribing a channel from the ban updates is as simple as running a command.
 3. **Embeds for Better Visualization** - The bot uses Discord Embeds for a better visual presentation of ban data.
 
