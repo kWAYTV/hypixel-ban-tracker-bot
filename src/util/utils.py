@@ -1,10 +1,14 @@
 class Utils:
 
-    def __init__(self):
-        self.semaphore = False
-
-    async def change_semaphore(self, state: bool):
-        self.semaphore = state
-
-    async def get_semaphore(self):
-        return self.semaphore
+    @staticmethod
+    def clean_discord_username(username: str) -> str:
+        """
+        This static method takes a Discord username as input and returns a cleaned version of the username.
+        If the discriminator is '0', it removes it from the username.
+        Otherwise, it returns the original username.
+        """
+        username_split = username.split("#")
+        if username_split[1] == "0":
+            return f"@{username_split[0]}"
+        else:
+            return username

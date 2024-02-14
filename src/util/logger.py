@@ -1,43 +1,46 @@
 import discord
-from os import system, name
+from loguru import logger
 from datetime import datetime
 from discord.ext import commands
-from colorama import Fore, Style
 from src.helper.config import Config
 
 class Logger:
+    """
+    A class that handles logging and sending messages to Discord channels and users.
+    """
 
     def __init__(self, bot: commands.Bot = None):
-        self.config = Config()
-        # Set the colors for the logs
-        self.log_types = {
-            "INFO": Fore.CYAN,
-            "SUCCESS": Fore.GREEN,
-            "OK": Fore.GREEN,
-            "WARNING": Fore.YELLOW,
-            "SLEEP": Fore.YELLOW,
-            "ERROR": Fore.RED,
-            "BAD": Fore.RED,
-            "INPUT": Fore.BLUE,
-        }
         self.bot = bot
+        self.config = Config()
 
-    # Clear console function
-    def clear(self):
-        system("cls" if name in ("nt", "dos") else "clear")
-
-    # Function to send logs to the discord channel
     async def discord_log(self, description: str):
-        channel = self.bot.get_channel(self.config.logs_channel)
-        embed = discord.Embed(title="Hypixel Ban Tracker", description=description)
-        embed.set_thumbnail(url=self.config.hypixel_logo)
-        embed.set_footer(text=f"Hypixel Ban Tracker - discord.gg/kws")
-        embed.timestamp = datetime.utcnow()
-        await channel.send(embed=embed)
+        """
+        Sends a log message to the configured Discord logs channel.
 
-    # Function to log messages to the console
-    def log(self, type, message):
-        color = self.log_types[type]
-        now = datetime.now()
-        current_time = now.strftime("%d/%m/%Y • %H:%M:%S")
-        print(f"{Style.DIM}{current_time} • {Style.RESET_ALL}{Style.BRIGHT}{color}[{Style.RESET_ALL}{type}{Style.BRIGHT}{color}] {Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}{message}")
+        Args:
+            description (str): The description of the log message.
+        """
+        channel = self.bot.get_channel(self.config.logs_channel)
+        if channel:
+            embed = discord.Embed(title=self.config.app_name, description=f"```{description}```")
+            embed.set_thumbnail(url=self.config.app_logo)
+            embed.set_image(url=self.config.rainbow_line_gif)
+            embed.set_footer(text=f"{self.config.app_name_branded}", icon_url=self.config.app_logo)
+            embed.timestamp = datetime.utcnow()
+            await channel.send(embed=embed)
+        else:
+            logger.error(f"Could not find the logs channel with id {self.config.logs_channel}")
+
+    async def dm_user(self, userid: int, message: str):
+        """
+        Sends a direct message to a user with the specified user ID.
+
+        Args:
+            userid (int): The ID of the user to send the message to.
+            message (str): The message to send.
+        """
+        user = await self.bot.fetch_user(userid)
+        if user:
+            await user.send(message)
+        else:
+            logger.error(f"Could not find the user with id {userid}")

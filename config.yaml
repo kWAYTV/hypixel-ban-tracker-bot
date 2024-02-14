@@ -1,11 +1,9 @@
-# Discord #
-
-# Discord bot token
-discord_token: ""
-# Discord bot prefix
-bot_prefix: "."
-# Discord logs channel id
-logs_channel:
-# Tracker channels
-tracker_channels:
-  -
+app_logo: https://i.imgur.com/qXuAK9O.png
+app_name: Hypixel
+app_url: https://kwayservices.top
+app_version: 0.2
+bot_prefix: .
+bot_token: MTIwNzI2MjQ1NjExNjk0MDgyMA.Gf3_1r.HKGH0z4vzEOf0vlDx2674wbHNJqLKogpgIGw_I
+dev_guild_id: 1207263178338205746
+log_file: hypixel.log
+logs_channel: 1207268841915285534
