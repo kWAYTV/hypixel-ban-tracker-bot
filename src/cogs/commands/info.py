@@ -6,12 +6,12 @@ from discord import app_commands
 from src.helper.config import Config
 
 class Info(commands.Cog):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.config = Config()
 
     @app_commands.command(name="info", description="Information about the bot.")
-    async def info_command(self, interaction: discord.Interaction, hidden: bool = False):
+    async def info_command(self, interaction: discord.Interaction, hidden: bool = False) -> None:
         try:
             latency = round(self.bot.latency * 1000)
             embed = discord.Embed(
@@ -36,12 +36,12 @@ class Info(commands.Cog):
             await interaction.response.send_message("There was an error trying to execute that command!", ephemeral=hidden)
 
     @info_command.error
-    async def info_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def info_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError) -> None:
         if isinstance(error, app_commands.errors.MissingPermissions):
             await interaction.response.send_message(f"You don't have the necessary permissions to use this command.",ephemeral=True)
         else:
             await interaction.response.send_message(f"An error occurred: {error}", ephemeral=True)
 
-async def setup(bot: commands.Bot):
+async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(Info(bot))
     logger.info("Info command loaded!")

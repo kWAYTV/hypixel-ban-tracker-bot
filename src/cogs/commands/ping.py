@@ -6,12 +6,12 @@ from src.controller.discord.schema.embed_schema import EmbedSchema
 from src.controller.discord.embed_controller import EmbedController
 
 class Ping(commands.Cog):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
     @app_commands.checks.has_permissions(administrator=True)
     @app_commands.command(name="ping", description="Command to test the bot's latency.")
-    async def ping_command(self, interaction: discord.Interaction):
+    async def ping_command(self, interaction: discord.Interaction) -> None:
         try:
             latency = round(self.bot.latency * 1000)
 
@@ -28,7 +28,7 @@ class Ping(commands.Cog):
             await interaction.response.send_message("There was an error trying to execute that command!", ephemeral=True)
 
     @ping_command.error
-    async def ping_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def ping_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError) -> None:
         if isinstance(error, app_commands.errors.MissingPermissions):
             await interaction.response.send_message(f"You don't have the necessary permissions to use this command.",ephemeral=True)
         else:

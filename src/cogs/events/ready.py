@@ -6,12 +6,13 @@ from src.helper.config import Config
 from pystyle import Colors, Colorate, Center
 
 class OnReady(commands.Cog):
-    def __init__(self, bot):
+
+    def __init__(self, bot) -> None:
         self.bot = bot
         self.config = Config()
 
     @commands.Cog.listener()
-    async def on_ready(self):
+    async def on_ready(self) -> None:
 
         os.system("cls||clear")
 

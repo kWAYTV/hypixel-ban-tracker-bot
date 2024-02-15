@@ -11,7 +11,7 @@ class StatusLoop(commands.Cog):
         self.change_status.start()
 
     @tasks.loop(seconds=30)
-    async def change_status(self):
+    async def change_status(self) -> None:
         status_message = await self.status.get_status_message()
         await self.bot.change_presence(status=discord.Status.do_not_disturb, activity=discord.CustomActivity(name=status_message))
 

@@ -3,11 +3,11 @@ from discord.ext import commands
 
 class GuildJoin(commands.Cog):
 
-    def __init__(self, bot):
+    def __init__(self, bot) -> None:
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_guild_join(self, guild):
+    async def on_guild_join(self, guild) -> None:
 
         try:
             # Sync the commands

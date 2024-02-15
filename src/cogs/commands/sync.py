@@ -4,13 +4,13 @@ from discord.ext import commands
 from src.helper.config import Config
 
 class SyncCommand(commands.Cog):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.config = Config()
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def sync(self, ctx: commands.Context, guild: discord.Guild = None):
+    async def sync(self, ctx: commands.Context, guild: discord.Guild = None) -> None:
         try:
             await ctx.message.delete()
         except:
@@ -36,6 +36,6 @@ class SyncCommand(commands.Cog):
             await ctx.send(error_message, delete_after=10)  # Optionally delete the error message after a delay
             logger.critical(error_message)
 
-async def setup(bot: commands.Bot):
+async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(SyncCommand(bot))
     logger.info("Sync command loaded!")

@@ -10,7 +10,7 @@ class BansLoop(commands.Cog):
         self.check_bans.start()
 
     @tasks.loop(seconds=30)
-    async def check_bans(self):
+    async def check_bans(self) -> None:
         try:
             await self.bans_controller.check_and_update_bans()
         except Exception as e:

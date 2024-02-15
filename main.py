@@ -55,7 +55,7 @@ class Bot(commands.Bot):
             exit()
 
     # Function to shutdown the bot
-    async def close(self):
+    async def close(self) -> None:
         await super().close()
 
 # Run the bot

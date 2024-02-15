@@ -16,11 +16,11 @@ logs_channel:
 
 class FileManager:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = Config()
 
     # Function to check if the input files are valid
-    def check_input(self):
+    def check_input(self) -> None:
 
         # if there is no config file, create one.
         if not os.path.isfile("config.yaml"):

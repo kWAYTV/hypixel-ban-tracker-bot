@@ -3,7 +3,7 @@ from loguru import logger
 from yaml import SafeLoader
 
 class Config():
-    def __init__(self):
+    def __init__(self) -> None:
         self.config_path = "config.yaml"
 
         with open(self.config_path, "r") as file:
@@ -29,14 +29,15 @@ class Config():
         self.log_file = self.config["log_file"]
 
     # Function to change a value in config.yaml
-    def change_value(self, key, value):
+    def change_value(self, key, value) -> bool:
         try:
             with open(self.config_path, "r") as file:
                 config = yaml.load(file, Loader=SafeLoader)
             config[key] = value
             with open(self.config_path, "w") as file:
                 yaml.dump(config, file)
-            return logger.info(f"Changed value in config.yaml: {key} -> {value}, the file was rewritten.")
+            logger.info(f"Changed value in config.yaml: {key} -> {value}, the file was rewritten.")
+            return True
         except Exception as e:
             logger.critical(f"Failed to change value in config.yaml: {e}")
             return False

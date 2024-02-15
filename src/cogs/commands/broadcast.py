@@ -9,7 +9,7 @@ from src.controller.discord.embed_controller import EmbedController
 from src.database.controller.servers_db_controller import ServersDbController
 
 class BroadcastCommand(commands.Cog):
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
         self.config = Config()
         self.servers_db_controller = ServersDbController()
@@ -48,12 +48,12 @@ class BroadcastCommand(commands.Cog):
             await interaction.response.send_message("There was an error trying to execute that command!", ephemeral=hidden)
 
     @broadcast_bans.error
-    async def broadcast_bans_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def broadcast_bans_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError) -> None:
         if isinstance(error, app_commands.errors.MissingPermissions):
             await interaction.response.send_message(f"You don't have the necessary permissions to use this command.",ephemeral=True)
         else:
             await interaction.response.send_message(f"An error occurred: {error}", ephemeral=True)
 
-async def setup(bot: commands.Bot):
+async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(BroadcastCommand(bot))
     logger.info("Broadcast command loaded!")

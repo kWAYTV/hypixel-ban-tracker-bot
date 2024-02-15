@@ -13,7 +13,7 @@ class Logger:
         self.bot = bot
         self.config = Config()
 
-    async def discord_log(self, description: str):
+    async def discord_log(self, description: str) -> None:
         """
         Sends a log message to the configured Discord logs channel.
 
@@ -31,7 +31,7 @@ class Logger:
         else:
             logger.error(f"Could not find the logs channel with id {self.config.logs_channel}")
 
-    async def dm_user(self, userid: int, message: str):
+    async def dm_user(self, userid: int, message: str) -> None:
         """
         Sends a direct message to a user with the specified user ID.
 

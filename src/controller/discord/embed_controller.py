@@ -9,7 +9,7 @@ class EmbedController:
     A class that handles the creation of Discord embeds.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = Config()
     
     async def build_embed(self, embed_schema: EmbedSchema) -> discord.Embed:
@@ -54,7 +54,7 @@ class EmbedController:
         except Exception as e:
             logger.error(f"Failed to build embed: {e}")
 
-    async def set_defaults(self, embed: discord.Embed, schema: dict):
+    async def set_defaults(self, embed: discord.Embed, schema: dict) -> None:
         """
         Sets default values for various properties of the embed.
 

@@ -1,4 +1,5 @@
 import requests, time, math
+from discord import Embed
 from discord.ext import commands
 from src.controller.discord.schema.embed_schema import EmbedSchema
 from src.controller.discord.embed_controller import EmbedController
@@ -15,7 +16,7 @@ class BansController:
         check_and_update_bans: Checks for ban updates and updates the ban messages in the specified channels.
     """
 
-    def __init__(self, bot: commands.Bot):
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
         self.session = requests.Session()
@@ -28,18 +29,18 @@ class BansController:
         self.servers_db_controller = ServersDbController()
         self.url = "https://api.plancke.io/hypixel/v1/punishmentStats"
 
-    async def get_current_stats(self):
+    async def get_current_stats(self) -> dict:
         response = self.session.get(self.url)
         return response.json().get('record', {})
 
-    async def update_recent_bans(self, wd_ban_diff, staff_ban_diff):
+    async def update_recent_bans(self, wd_ban_diff, staff_ban_diff) -> None:
         if wd_ban_diff > 0:
             self.recent_bans.append(f"⛔ Watchdog -> {wd_ban_diff} player{'s' if wd_ban_diff > 1 else ''}.")
         if staff_ban_diff > 0:
             self.recent_bans.append(f"🔨 Staff -> {staff_ban_diff} player{'s' if staff_ban_diff > 1 else ''}.")
         self.recent_bans = self.recent_bans[-10:]  # Keep only the last 5 incidents
 
-    async def create_embed(self, curr_stats, last_update, recent_bans):
+    async def create_embed(self, curr_stats, last_update, recent_bans) -> Embed:
         daily_watchdog = curr_stats.get("watchdog_rollingDaily", 0)
         daily_staff = curr_stats.get("staff_rollingDaily", 0)
         daily_total = daily_watchdog + daily_staff
@@ -63,7 +64,7 @@ class BansController:
         )
         return await EmbedController().build_embed(embed_schema)
 
-    async def check_and_update_bans(self):
+    async def check_and_update_bans(self) -> None:
         curr_stats = await self.get_current_stats()
         wd_bans = curr_stats.get("watchdog_total", 0)
         staff_bans = curr_stats.get("staff_total", 0)
