@@ -25,8 +25,8 @@ python main.py
 ## 🖐️ Commands
 
 - `/ping` - Tests the bot.
-- `/broadcast` - Subscribes the channel to the Ban Tracker.
 - `/log_channel` - Sets the channel where the bot will send logs.
+- `/broadcast` - Subscribes the channel to the Ban Tracker.
 - `.sync` - Syncs the bot commands with the server. (You can provide a Guild ID to sync a specific server only)
 
 ## ⚠️ Disclaimer
