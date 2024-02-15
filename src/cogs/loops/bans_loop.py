@@ -11,10 +11,10 @@ class BansLoop(commands.Cog):
 
     @tasks.loop(seconds=30)
     async def check_bans(self):
-        #try:
-        await self.bans_controller.check_and_update_bans()
-        """ except Exception as e:
-            logger.error(f"Error while updating bans: {e}") """
+        try:
+            await self.bans_controller.check_and_update_bans()
+        except Exception as e:
+            logger.error(f"Error while updating bans: {e}")
 
     @check_bans.before_loop
     async def before_check_bans(self) -> None:

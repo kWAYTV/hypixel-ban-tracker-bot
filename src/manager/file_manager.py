@@ -3,21 +3,15 @@ from loguru import logger
 from src.helper.config import Config
 
 defaultConfig = """
-## App
-app_logo: 
-app_url: 
-app_name: 
-app_version: ""
-
-## Bot
-bot_prefix: 
+app_logo: https://i.imgur.com/qXuAK9O.png
+app_name: Hypixel
+app_url: https://kwayservices.top
+app_version: 0.2
+bot_prefix: .
 bot_token: 
-logs_channel: 
-chat_category: 
 dev_guild_id: 
-
-## Logs
-log_file: plutoformer.log
+log_file: hypixel.log
+logs_channel: 
 """
 
 class FileManager:
