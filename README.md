@@ -3,6 +3,7 @@
 Welcome to the HypixelBanChecker, a discord bot that actively monitors and reports bans on the Hypixel Minecraft server. The bot is intended to assist administrators and players by providing real-time ban data fetched directly from the Hypixel API. It's designed to work seamlessly with your existing discord channels.
 
 ## 📸 Preview
+
 ![Hypixel Bans Embed](preview.png)
 
 ## 📖 About
@@ -20,16 +21,18 @@ HypixelBanChecker tracks watchdog (automatic) and staff (manual) bans on the Hyp
 1. Clone the repository & install the requirements.
 2. Update the `config.yaml` file with the needed info.
 3. Run the bot with the following command:
+
 ```bash
 python main.py
 ```
+
 4. Use the commands to subscribe channels and send the embed on the next bans loop iteration.
 
 ## 🖐️ Commands
 
 - `/ping` - Tests the bot.
-- `/log_channel` - Sets the channel where the bot will send logs.
 - `/broadcast` - Subscribes the channel to the Ban Tracker.
+- `/unbroadcast` - Removes this server from ban broadcasts.
 - `.sync` - Syncs the bot commands with the server. (You can provide a Guild ID to sync a specific server only)
 
 ## ⚠️ Disclaimer
