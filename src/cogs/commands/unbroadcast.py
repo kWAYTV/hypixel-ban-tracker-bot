@@ -33,10 +33,40 @@ class UnbroadcastCommand(commands.Cog):
                     color=0xFFA500,
                 )
             else:
+                # Try to clean up the message panel before removing from database
+                message_deleted = False
+                if server_exists.message_id:
+                    try:
+                        channel = self.bot.get_channel(server_exists.channel_id)
+                        if channel:
+                            message = await channel.fetch_message(
+                                server_exists.message_id
+                            )
+                            if message:
+                                await message.delete()
+                                message_deleted = True
+                                logger.info(
+                                    f"Deleted ban panel message for server {interaction.guild.id}"
+                                )
+                    except Exception as e:
+                        logger.warning(
+                            f"Could not delete ban panel message for server {interaction.guild.id}: {e}"
+                        )
+                        # Continue with unsubscription even if message deletion fails
+
+                # Remove server from database
                 await self.servers_db_controller.delete(interaction.guild.id)
+
+                # Update success message based on cleanup result
+                description = "Successfully removed this server from ban broadcasts."
+                if message_deleted:
+                    description += "\n✅ Ban panel message was also cleaned up."
+                elif server_exists.message_id:
+                    description += "\n⚠️ Ban panel message could not be found (may have been deleted manually)."
+
                 embed_schema = EmbedSchema(
                     title="Broadcast Channel Removed!",
-                    description="Successfully removed this server from ban broadcasts.",
+                    description=description,
                     fields=[
                         {
                             "name": "Server",

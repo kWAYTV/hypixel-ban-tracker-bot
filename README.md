@@ -32,7 +32,7 @@ python main.py
 
 - `/ping` - Tests the bot.
 - `/broadcast` - Subscribes the channel to the Ban Tracker.
-- `/unbroadcast` - Removes this server from ban broadcasts.
+- `/unbroadcast` - Removes this server from ban broadcasts and cleans up the ban panel message.
 - `.sync` - Syncs the bot commands with the server. (You can provide a Guild ID to sync a specific server only)
 
 ## ⚠️ Disclaimer
