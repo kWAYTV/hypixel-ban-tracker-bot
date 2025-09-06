@@ -26,8 +26,8 @@ class BotStatus:
                 f"{sum(guild.member_count for guild in self.bot.guilds)} users."
             ),
             lambda self: f"Hey! My name is {self.config.app_name}.",
-            lambda self: "Hypixel Bans",
-            lambda self: "People taking the L",
+            lambda self: "Broadcasting Hypixel bans!",
+            lambda self: "People taking the L.",
         ]
 
         self.status_generator = cycle(self.sentences)
