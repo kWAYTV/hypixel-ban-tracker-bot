@@ -1,8 +1,10 @@
-import discord, yaml
+import discord
+import yaml
 from loguru import logger
 from yaml import SafeLoader
 
-class Config():
+
+class Config:
     def __init__(self) -> None:
         self.config_path = "config.yaml"
 
@@ -22,11 +24,16 @@ class Config():
         # Discord bot
         self.bot_prefix = self.config["bot_prefix"]
         self.bot_token: str = self.config["bot_token"]
-        self.logs_channel: int = int(self.config["logs_channel"])
         self.dev_guild_id = discord.Object(int(self.config["dev_guild_id"]))
 
         # Logs
         self.log_file = self.config["log_file"]
+
+        # Scalability settings
+        self.update_batch_size = self.config.get("update_batch_size", 5)
+        self.batch_delay = self.config.get("batch_delay", 1.0)
+        self.max_concurrent_updates = self.config.get("max_concurrent_updates", 3)
+        self.min_update_interval = self.config.get("min_update_interval", 30)
 
     # Function to change a value in config.yaml
     def change_value(self, key, value) -> bool:
@@ -36,7 +43,9 @@ class Config():
             config[key] = value
             with open(self.config_path, "w") as file:
                 yaml.dump(config, file)
-            logger.info(f"Changed value in config.yaml: {key} -> {value}, the file was rewritten.")
+            logger.info(
+                f"Changed value in config.yaml: {key} -> {value}, the file was rewritten."
+            )
             return True
         except Exception as e:
             logger.critical(f"Failed to change value in config.yaml: {e}")

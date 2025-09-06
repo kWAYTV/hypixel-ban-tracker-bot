@@ -3,7 +3,12 @@ app_name: Hypixel
 app_url: https://kwayservices.top
 app_version: 0.2
 bot_prefix: .
-bot_token: 
-dev_guild_id: 
+bot_token:
+dev_guild_id:
 log_file: hypixel.log
-logs_channel: 
+
+# Scalability settings for ban updates
+update_batch_size: 5          # Servers to update per batch
+batch_delay: 1.0             # Seconds between batches
+max_concurrent_updates: 3    # Max concurrent server updates
+min_update_interval: 30      # Minimum seconds between updates 
