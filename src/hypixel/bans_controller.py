@@ -7,8 +7,6 @@ from discord import Embed
 from discord.ext import commands
 from loguru import logger
 
-from src.controller.discord.embed_controller import EmbedController
-from src.controller.discord.schema.embed_schema import EmbedSchema
 from src.database.controller.servers_db_controller import ServersDbController
 from src.helper.config import Config
 
@@ -65,29 +63,49 @@ class BansController:
         watchdog_last_min = curr_stats.get("watchdog_lastMinute", 0)
         recent_bans_text = "\n".join(recent_bans) if recent_bans else "No recent bans"
 
-        embed_schema = EmbedSchema(
+        embed = Embed(
             title="Bans Tracker",
             description="This is a live tracker of bans on Hypixel.",
-            fields=[
-                {
-                    "name": "Daily Watchdog",
-                    "value": f"`{daily_watchdog:,}`",
-                    "inline": True,
-                },
-                {"name": "Daily Staff", "value": f"`{daily_staff:,}`", "inline": True},
-                {
-                    "name": "Watchdog Last Min",
-                    "value": f"`{watchdog_last_min}`",
-                    "inline": True,
-                },
-                {"name": "Daily Total", "value": f"`{daily_total:,}`", "inline": True},
-                {"name": "Total Bans", "value": f"`{total_bans:,}`", "inline": True},
-                {"name": "Updated", "value": f"<t:{last_update}:R>", "inline": True},
-                {"name": "Recent", "value": f"```{recent_bans_text}```"},
-            ],
             color=0x00FF00,
         )
-        return await EmbedController().build_embed(embed_schema)
+
+        embed.add_field(
+            name="Daily Watchdog",
+            value=f"`{daily_watchdog:,}`",
+            inline=True,
+        )
+        embed.add_field(
+            name="Daily Staff",
+            value=f"`{daily_staff:,}`",
+            inline=True,
+        )
+        embed.add_field(
+            name="Watchdog Last Min",
+            value=f"`{watchdog_last_min}`",
+            inline=True,
+        )
+        embed.add_field(
+            name="Daily Total",
+            value=f"`{daily_total:,}`",
+            inline=True,
+        )
+        embed.add_field(
+            name="Total Bans",
+            value=f"`{total_bans:,}`",
+            inline=True,
+        )
+        embed.add_field(
+            name="Updated",
+            value=f"<t:{last_update}:R>",
+            inline=True,
+        )
+        embed.add_field(
+            name="Recent",
+            value=f"```{recent_bans_text}```",
+            inline=False,
+        )
+
+        return embed
 
     async def check_and_update_bans(self) -> None:
         curr_stats = await self.get_current_stats()

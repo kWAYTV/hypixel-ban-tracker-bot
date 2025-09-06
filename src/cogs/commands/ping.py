@@ -3,9 +3,6 @@ from discord import app_commands
 from discord.ext import commands
 from loguru import logger
 
-from src.controller.discord.embed_controller import EmbedController
-from src.controller.discord.schema.embed_schema import EmbedSchema
-
 
 class Ping(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -17,14 +14,12 @@ class Ping(commands.Cog):
         try:
             latency = round(self.bot.latency * 1000)
 
-            embed_schema = EmbedSchema(
+            embed = discord.Embed(
                 title="🏓 Pong!",
                 description=f"Latency is `{latency}ms`.",
-                fields=[],
                 color=0xB34760,
             )
 
-            embed = EmbedController().build_embed(embed_schema)
             await interaction.response.send_message(embed=embed, ephemeral=True)
         except Exception as e:
             logger.critical(f"Failed to respond to ping command: {e}")

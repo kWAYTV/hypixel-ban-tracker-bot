@@ -1,6 +1,8 @@
-from loguru import logger
 from discord.ext import commands, tasks
-from src.controller.hypixel.bans_controller import BansController
+from loguru import logger
+
+from src.hypixel.bans_controller import BansController
+
 
 class BansLoop(commands.Cog):
 
@@ -19,6 +21,7 @@ class BansLoop(commands.Cog):
     @check_bans.before_loop
     async def before_check_bans(self) -> None:
         await self.bot.wait_until_ready()
+
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(BansLoop(bot))

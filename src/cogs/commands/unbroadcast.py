@@ -3,8 +3,6 @@ from discord import app_commands
 from discord.ext import commands
 from loguru import logger
 
-from src.controller.discord.embed_controller import EmbedController
-from src.controller.discord.schema.embed_schema import EmbedSchema
 from src.database.controller.servers_db_controller import ServersDbController
 from src.helper.config import Config
 
@@ -26,10 +24,9 @@ class UnbroadcastCommand(commands.Cog):
             server_exists = await self.servers_db_controller.get(interaction.guild.id)
 
             if not server_exists:
-                embed_schema = EmbedSchema(
+                embed = discord.Embed(
                     title="Not Subscribed!",
                     description="This server is not currently subscribed to ban broadcasts.",
-                    fields=[],
                     color=0xFFA500,
                 )
             else:
@@ -51,19 +48,19 @@ class UnbroadcastCommand(commands.Cog):
                         "(may have been deleted manually)."
                     )
 
-                embed_schema = EmbedSchema(
+                embed = discord.Embed(
                     title="Broadcast Channel Removed!",
                     description=description,
-                    fields=[
-                        {
-                            "name": "Server",
-                            "value": f"- {interaction.guild.name} (`{interaction.guild.id}`)",
-                        },
-                    ],
                     color=0xFF0000,
                 )
 
-            embed = await EmbedController().build_embed(embed_schema)
+                embed.add_field(
+                    name="Server",
+                    value=f"- {interaction.guild.name} (`{interaction.guild.id}`)",
+                    inline=False,
+                )
+
+            # embed is already created above
             await interaction.response.send_message(embed=embed, ephemeral=hidden)
         except Exception as e:
             logger.critical(f"Failed to respond to unbroadcast command: {e}")

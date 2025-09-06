@@ -3,8 +3,6 @@ from discord import app_commands
 from discord.ext import commands
 from loguru import logger
 
-from src.controller.discord.embed_controller import EmbedController
-from src.controller.discord.schema.embed_schema import EmbedSchema
 from src.database.controller.servers_db_controller import ServersDbController
 from src.database.schema.server_schema import ServerSchema
 from src.helper.config import Config
@@ -43,23 +41,22 @@ class BroadcastCommand(commands.Cog):
                 )
                 return
 
-            embed_schema = EmbedSchema(
+            embed = discord.Embed(
                 title="Broadcast Channel Added!",
                 description="Succesfully set the broadcast channel to the channel below.",
-                fields=[
-                    {
-                        "name": "Channel",
-                        "value": f"- {channel.mention} (`{channel.id}`)",
-                    },
-                    {
-                        "name": "Server",
-                        "value": f"- {interaction.guild.name} (`{interaction.guild.id}`)",
-                    },
-                ],
                 color=0x00FF00,
             )
 
-            embed = await EmbedController().build_embed(embed_schema)
+            embed.add_field(
+                name="Channel",
+                value=f"- {channel.mention} (`{channel.id}`)",
+                inline=False,
+            )
+            embed.add_field(
+                name="Server",
+                value=f"- {interaction.guild.name} (`{interaction.guild.id}`)",
+                inline=False,
+            )
             await interaction.response.send_message(embed=embed, ephemeral=hidden)
         except Exception as e:
             logger.critical(f"Failed to respond to broadcast command: {e}")
