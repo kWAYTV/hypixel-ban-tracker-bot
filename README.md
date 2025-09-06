@@ -1,40 +1,75 @@
-# 🏰 HypixelBanChecker 🛡️
+# Hypixel Ban Tracker
 
-Welcome to the HypixelBanChecker, a discord bot that actively monitors and reports bans on the Hypixel Minecraft server. The bot is intended to assist administrators and players by providing real-time ban data fetched directly from the Hypixel API. It's designed to work seamlessly with your existing discord channels.
+A Discord bot that provides real-time monitoring and reporting of bans on the Hypixel Minecraft server, helping administrators and players stay informed about server ban activity.
 
-## 📸 Preview
+## Features
 
-![Hypixel Bans Embed](preview.png)
+- **Real-time Monitoring**: Tracks watchdog and staff bans every 30 seconds
+- **Automated Updates**: Sends live ban statistics to subscribed Discord channels
+- **Clean Interface**: Uses Discord embeds for professional presentation
+- **Easy Management**: Simple commands to subscribe/unsubscribe channels
+- **Scalable Architecture**: Handles multiple servers efficiently
 
-## 📖 About
+## Installation
 
-HypixelBanChecker tracks watchdog (automatic) and staff (manual) bans on the Hypixel Minecraft server. The bot is easy to set up and use, and it offers real-time updates on the ban status of players on the Hypixel server.
+1. Clone the repository:
 
-## 🚀 Features
+```bash
+git clone https://github.com/kWAYTV/hypixel-ban-tracker-bot.git
+cd hypixel-ban-tracker-bot
+```
 
-1. **Real-time Updates** - The bot checks the ban status every 30 seconds.
-2. **Easy to Use Commands** - Subscribing or unsubscribing a channel from the ban updates is as simple as running a command.
-3. **Embeds for Better Visualization** - The bot uses Discord Embeds for a better visual presentation of ban data.
+2. Install dependencies:
 
-## 🛠️ Setup
+```bash
+pip install -r requirements.txt
+```
 
-1. Clone the repository & install the requirements.
-2. Update the `config.yaml` file with the needed info.
-3. Run the bot with the following command:
+3. Configure the bot:
+
+```bash
+cp config.yaml.example config.yaml
+# Edit config.yaml with your bot token and settings
+```
+
+4. Run the bot:
 
 ```bash
 python main.py
 ```
 
-4. Use the commands to subscribe channels and send the embed on the next bans loop iteration.
+## Configuration
 
-## 🖐️ Commands
+Edit `config.yaml` with the following settings:
 
-- `/ping` - Tests the bot.
-- `/broadcast` - Subscribes the channel to the Ban Tracker.
-- `/unbroadcast` - Removes this server from ban broadcasts and cleans up the ban panel message.
-- `.sync` - Syncs the bot commands with the server. (You can provide a Guild ID to sync a specific server only)
+- `bot_token`: Your Discord bot token
+- `dev_guild_id`: Guild ID for development/testing
+- `log_file`: Path for log file output
+- `update_batch_size`: Servers to update per batch (default: 5)
+- `batch_delay`: Delay between batches in seconds (default: 1.0)
+- `max_concurrent_updates`: Maximum concurrent server updates (default: 3)
 
-## ⚠️ Disclaimer
+## Commands
 
-This is a Proof of Concept (PoC) project. It is not officially affiliated with, maintained, sponsored or endorsed by Hypixel or Mojang/Microsoft. Use this tool responsibly and respect the Hypixel server rules and terms.
+| Command        | Description                             | Permissions   |
+| -------------- | --------------------------------------- | ------------- |
+| `/ping`        | Test bot connectivity and latency       | Administrator |
+| `/broadcast`   | Subscribe channel to ban updates        | Administrator |
+| `/unbroadcast` | Unsubscribe and clean up ban panel      | Administrator |
+| `/info`        | Display bot statistics                  | Administrator |
+| `.sync`        | Sync slash commands (optional guild ID) | Administrator |
+
+## Usage
+
+1. Invite the bot to your Discord server
+2. Use `/broadcast` in the desired channel to start receiving ban updates
+3. The bot will automatically update live ban statistics every 30 seconds
+4. Use `/unbroadcast` to stop updates and clean up messages
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Disclaimer
+
+This is an unofficial project and is not affiliated with, maintained, sponsored, or endorsed by Hypixel, Mojang/Microsoft, or Discord. Use responsibly and in accordance with all applicable terms of service.
