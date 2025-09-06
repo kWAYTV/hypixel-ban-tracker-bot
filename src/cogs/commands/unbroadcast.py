@@ -6,7 +6,6 @@ from loguru import logger
 from src.controller.discord.embed_controller import EmbedController
 from src.controller.discord.schema.embed_schema import EmbedSchema
 from src.database.controller.servers_db_controller import ServersDbController
-from src.database.schema.server_schema import ServerSchema
 from src.helper.config import Config
 
 
@@ -30,29 +29,14 @@ class UnbroadcastCommand(commands.Cog):
                 embed_schema = EmbedSchema(
                     title="Not Subscribed!",
                     description="This server is not currently subscribed to ban broadcasts.",
+                    fields=[],
                     color=0xFFA500,
                 )
             else:
                 # Try to clean up the message panel before removing from database
-                message_deleted = False
-                if server_exists.message_id:
-                    try:
-                        channel = self.bot.get_channel(server_exists.channel_id)
-                        if channel:
-                            message = await channel.fetch_message(
-                                server_exists.message_id
-                            )
-                            if message:
-                                await message.delete()
-                                message_deleted = True
-                                logger.info(
-                                    f"Deleted ban panel message for server {interaction.guild.id}"
-                                )
-                    except Exception as e:
-                        logger.warning(
-                            f"Could not delete ban panel message for server {interaction.guild.id}: {e}"
-                        )
-                        # Continue with unsubscription even if message deletion fails
+                message_deleted = await self._cleanup_message_panel(
+                    server_exists, interaction.guild.id
+                )
 
                 # Remove server from database
                 await self.servers_db_controller.delete(interaction.guild.id)
@@ -62,7 +46,10 @@ class UnbroadcastCommand(commands.Cog):
                 if message_deleted:
                     description += "\n✅ Ban panel message was also cleaned up."
                 elif server_exists.message_id:
-                    description += "\n⚠️ Ban panel message could not be found (may have been deleted manually)."
+                    description += (
+                        "\n⚠️ Ban panel message could not be found "
+                        "(may have been deleted manually)."
+                    )
 
                 embed_schema = EmbedSchema(
                     title="Broadcast Channel Removed!",
@@ -84,13 +71,37 @@ class UnbroadcastCommand(commands.Cog):
                 "There was an error trying to execute that command!", ephemeral=hidden
             )
 
+    async def _cleanup_message_panel(self, server_schema, guild_id: int) -> bool:
+        """Clean up the message panel and return success status."""
+        if not server_schema.message_id:
+            return False
+
+        try:
+            channel = self.bot.get_channel(server_schema.channel_id)
+            if not channel:
+                return False
+
+            message = await channel.fetch_message(server_schema.message_id)
+            if not message:
+                return False
+
+            await message.delete()
+            logger.info(f"Deleted ban panel message for server {guild_id}")
+            return True
+
+        except Exception as e:
+            logger.warning(
+                f"Could not delete ban panel message for server {guild_id}: {e}"
+            )
+            return False
+
     @unbroadcast_bans.error
     async def unbroadcast_bans_error(
         self, interaction: discord.Interaction, error: app_commands.AppCommandError
     ) -> None:
         if isinstance(error, app_commands.errors.MissingPermissions):
             await interaction.response.send_message(
-                f"You don't have the necessary permissions to use this command.",
+                "You don't have the necessary permissions to use this command.",
                 ephemeral=True,
             )
         else:

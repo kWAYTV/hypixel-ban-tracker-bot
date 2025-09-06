@@ -5,4 +5,7 @@ class ServerSchema:
         self.message_id = message_id
 
     def __str__(self) -> str:
-        return f"RepoSchema(server_id={self.server_id}, channel_id={self.channel_id}, message_id={self.message_id})"
+        return (
+            f"RepoSchema(server_id={self.server_id}, "
+            f"channel_id={self.channel_id}, message_id={self.message_id})"
+        )

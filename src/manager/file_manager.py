@@ -1,10 +1,11 @@
 import os
+import sys
 
 from loguru import logger
 
 from src.helper.config import Config
 
-defaultConfig = """
+DEFAULT_CONFIG = """
 app_logo: https://i.imgur.com/qXuAK9O.png
 app_name: Hypixel
 app_url: https://kwayservices.top
@@ -33,11 +34,12 @@ class FileManager:
         # if there is no config file, create one.
         if not os.path.isfile("config.yaml"):
             logger.info("Config file not found, creating one...")
-            open("config.yaml", "w+").write(defaultConfig)
+            with open("config.yaml", "w+", encoding="utf-8") as config_file:
+                config_file.write(DEFAULT_CONFIG)
             logger.info(
                 "Successfully created config.yml, please fill it out and try again."
             )
-            exit()
+            sys.exit(1)
 
         # If the folder "/src/database" doesn't exist, create it.
         if not os.path.exists("src/database"):

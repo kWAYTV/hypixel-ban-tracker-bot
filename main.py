@@ -1,26 +1,35 @@
 # Imports
-import os, discord, asyncio
-from loguru import logger
+import os
+import sys
 from traceback import format_exc
+
+import discord
 from discord.ext import commands
-from src.helper.config import Config
+from loguru import logger
+
 from src.database.loader import DatabaseLoader
+from src.helper.config import Config
 from src.manager.file_manager import FileManager
 
 # Set logging system handler
 logger.add(Config().log_file, mode="w+")
 
+
 # Define the bot & load the commands, events and loops
 class Bot(commands.Bot):
     def __init__(self) -> None:
         self.file_manager = FileManager()
-        super().__init__(command_prefix=Config().bot_prefix, help_command=None, intents=discord.Intents.all())
+        super().__init__(
+            command_prefix=Config().bot_prefix,
+            help_command=None,
+            intents=discord.Intents.all(),
+        )
 
     # Function to load the extensions
     async def setup_hook(self) -> None:
         try:
             os.system("cls||clear")
-            logger.info(f"Starting bot...")
+            logger.info("Starting bot...")
 
             # Check for file inputs
             logger.debug("Checking for file inputs...")
@@ -49,14 +58,15 @@ class Bot(commands.Bot):
             await DatabaseLoader().setup()
 
             # Done!
-            logger.info(f"Setup completed!")
+            logger.info("Setup completed!")
         except Exception:
             logger.critical(f"Error setting up bot: {format_exc()}")
-            exit()
+            sys.exit(1)
 
     # Function to shutdown the bot
     async def close(self) -> None:
         await super().close()
+
 
 # Run the bot
 if __name__ == "__main__":
@@ -65,7 +75,7 @@ if __name__ == "__main__":
         bot.run(Config().bot_token)
     except KeyboardInterrupt:
         logger.critical("Goodbye!")
-        exit()
+        sys.exit(0)
     except Exception:
         logger.critical(f"Error running bot: {format_exc()}")
-        exit()
+        sys.exit(1)

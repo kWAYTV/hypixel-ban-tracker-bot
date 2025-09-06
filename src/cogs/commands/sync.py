@@ -1,7 +1,9 @@
 import discord
-from loguru import logger
 from discord.ext import commands
+from loguru import logger
+
 from src.helper.config import Config
+
 
 class SyncCommand(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -13,9 +15,8 @@ class SyncCommand(commands.Cog):
     async def sync(self, ctx: commands.Context, guild: discord.Guild = None) -> None:
         try:
             await ctx.message.delete()
-        except:
+        except Exception:
             logger.warning("Tried to delete a message that was not found.")
-            pass
 
         try:
             if guild is None:
@@ -23,9 +24,11 @@ class SyncCommand(commands.Cog):
                 success_message = "✅ Successfully synced slash commands globally!"
             else:
                 await self.bot.tree.sync(guild=guild)
-                success_message = f"✅ Successfully synced slash commands in {guild.name}!"
+                success_message = (
+                    f"✅ Successfully synced slash commands in {guild.name}!"
+                )
             msg = await ctx.send(success_message)
-            
+
             logger.info("Slash commands were synced by an admin.")
 
             # Delete the success message after a delay
@@ -33,8 +36,11 @@ class SyncCommand(commands.Cog):
 
         except Exception as e:
             error_message = f"❌ Failed to sync slash commands: {e}"
-            await ctx.send(error_message, delete_after=10)  # Optionally delete the error message after a delay
+            await ctx.send(
+                error_message, delete_after=10
+            )  # Optionally delete the error message after a delay
             logger.critical(error_message)
+
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(SyncCommand(bot))

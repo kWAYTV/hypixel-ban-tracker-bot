@@ -21,7 +21,8 @@ class BansController:
         get_current_stats: Retrieves the current ban statistics from the Hypixel API.
         update_recent_bans: Updates the list of recent ban messages.
         create_embed: Creates an embed object for displaying ban information.
-        check_and_update_bans: Checks for ban updates and updates the ban messages in the specified channels.
+        check_and_update_bans: Checks for ban updates and updates the ban messages
+            in the specified channels.
     """
 
     def __init__(self, bot: commands.Bot) -> None:
@@ -122,6 +123,11 @@ class BansController:
 
         self.old_wd_bans, self.old_staff_bans = wd_bans, staff_bans
 
+    async def _execute_with_semaphore(self, task, semaphore):
+        """Execute a task with semaphore control."""
+        async with semaphore:
+            return await task
+
     async def process_servers_in_batches(self, servers, curr_stats, last_update):
         """Process servers in batches to avoid rate limiting"""
         batch_size = self.config.update_batch_size
@@ -140,11 +146,10 @@ class BansController:
             # Execute batch with semaphore to control concurrency
             semaphore = asyncio.Semaphore(max_concurrent)
 
-            async def limited_update(task):
-                async with semaphore:
-                    return await task
-
-            await asyncio.gather(*[limited_update(task) for task in tasks])
+            # Execute all tasks with concurrency control
+            await asyncio.gather(
+                *[self._execute_with_semaphore(task, semaphore) for task in tasks]
+            )
 
             # Add delay between batches (except for last batch)
             if i + batch_size < len(servers):

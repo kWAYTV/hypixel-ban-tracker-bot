@@ -20,7 +20,7 @@ class Info(commands.Cog):
         try:
             latency = round(self.bot.latency * 1000)
             embed = discord.Embed(
-                description=f":information_source: Some information about the bot.",
+                description=":information_source: Some information about the bot.",
                 color=0x000000,
             )
             embed.set_author(
@@ -66,7 +66,7 @@ class Info(commands.Cog):
     ) -> None:
         if isinstance(error, app_commands.errors.MissingPermissions):
             await interaction.response.send_message(
-                f"You don't have the necessary permissions to use this command.",
+                "You don't have the necessary permissions to use this command.",
                 ephemeral=True,
             )
         else:

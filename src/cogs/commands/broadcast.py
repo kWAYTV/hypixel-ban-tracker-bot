@@ -73,7 +73,7 @@ class BroadcastCommand(commands.Cog):
     ) -> None:
         if isinstance(error, app_commands.errors.MissingPermissions):
             await interaction.response.send_message(
-                f"You don't have the necessary permissions to use this command.",
+                "You don't have the necessary permissions to use this command.",
                 ephemeral=True,
             )
         else:

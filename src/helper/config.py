@@ -8,7 +8,7 @@ class Config:
     def __init__(self) -> None:
         self.config_path = "config.yaml"
 
-        with open(self.config_path, "r") as file:
+        with open(self.config_path, "r", encoding="utf-8") as file:
             self.config = yaml.load(file, Loader=SafeLoader)
 
         # Rainbow line gif
@@ -38,10 +38,10 @@ class Config:
     # Function to change a value in config.yaml
     def change_value(self, key, value) -> bool:
         try:
-            with open(self.config_path, "r") as file:
+            with open(self.config_path, "r", encoding="utf-8") as file:
                 config = yaml.load(file, Loader=SafeLoader)
             config[key] = value
-            with open(self.config_path, "w") as file:
+            with open(self.config_path, "w", encoding="utf-8") as file:
                 yaml.dump(config, file)
             logger.info(
                 f"Changed value in config.yaml: {key} -> {value}, the file was rewritten."

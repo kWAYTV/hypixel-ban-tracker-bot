@@ -1,6 +1,9 @@
 from itertools import cycle
+
 from discord.ext import commands
+
 from src.helper.config import Config
+
 
 class BotStatus:
     """
@@ -18,9 +21,12 @@ class BotStatus:
         self.config = Config()
 
         self.sentences = [
-            lambda self: f"Holding {len(self.bot.guilds)} guilds & {sum(guild.member_count for guild in self.bot.guilds)} users.",
+            lambda self: (
+                f"Holding {len(self.bot.guilds)} guilds & "
+                f"{sum(guild.member_count for guild in self.bot.guilds)} users."
+            ),
             lambda self: f"Hey! My name is {self.config.app_name}.",
-            lambda self: "Hypixel Bans", 
+            lambda self: "Hypixel Bans",
             lambda self: "People taking the L",
         ]
 
