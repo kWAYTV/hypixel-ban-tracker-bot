@@ -21,7 +21,7 @@ class UnbroadcastCommand(commands.Cog):
         name="unbroadcast", description="Remove this server from ban broadcasts."
     )
     async def unbroadcast_bans(
-        self, interaction: discord.Interaction, hidden: bool = False
+        self, interaction: discord.Interaction, hidden: bool = True
     ) -> None:
         try:
             server_exists = await self.servers_db_controller.get(interaction.guild.id)

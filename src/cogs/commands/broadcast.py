@@ -24,7 +24,7 @@ class BroadcastCommand(commands.Cog):
         self,
         interaction: discord.Interaction,
         channel: discord.TextChannel = None,
-        hidden: bool = False,
+        hidden: bool = True,
     ) -> None:
         try:
 
